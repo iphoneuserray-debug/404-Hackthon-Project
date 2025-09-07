@@ -1,0 +1,54 @@
+import random
+from datetime import datetime, timedelta
+import openpyxl
+
+# Predefined pool of sensors
+SENSORS = [
+    {"id": 7, "sensor": "VL53L1X", "note": "Functional, longer range, but glass interference noted"},
+    {"id": 8, "sensor": "VL6180X", "note": "Stable, but still affected by transparent surfaces"},
+    {"id": 9, "sensor": "SEN0381", "note": "High accuracy, needs calibration in special environments"},
+    {"id": 10, "sensor": "SEN0531", "note": "Reliable, slightly unstable near reflective surfaces"},
+]
+
+STATUSES = ["Working", "Affected", "Error", "Offline"]
+
+def generate_sensor_data(max_rows: int = 5):
+    rows = []
+    num_rows = random.randint(1, max_rows)  # Random number of rows
+    base_time = datetime.now()
+
+    for i in range(num_rows):
+        sensor = random.choice(SENSORS)
+        row = {
+            "timestamp": (base_time + timedelta(seconds=i*5)).isoformat(timespec="seconds"),
+            "id": sensor["id"],
+            "sensor": sensor["sensor"],
+            "working": random.choice(STATUSES),
+            "affected": random.choice(STATUSES),
+            "note": sensor["note"]
+        }
+        rows.append(row)
+
+    return rows
+
+if __name__ == "__main__":
+    data = generate_sensor_data(random.randint(1, 10))
+    print("timestamp\tid\tsensor\tworking\taffected\tnote")
+    for row in data:
+        print(f"{row['timestamp']}\t{row['id']}\t{row['sensor']}\t"
+              f"{row['working']}\t{row['affected']}\t{row['note']}")
+        
+        excel_path = "sensor_status.xlsx"
+        wb = openpyxl.load_workbook(excel_path)
+        ws = wb.active
+        for row in data:
+            ws.append([
+                row["timestamp"],
+                row["id"],
+                row["sensor"],
+                row["working"],
+                row["affected"],
+                row["note"]
+            ])
+
+        wb.save(excel_path)
