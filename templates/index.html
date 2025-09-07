@@ -1,44 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sensor Status Search</title>
+  </head>
   <body>
-    <h2>Arduino Console Output</h2>
-    <button id="connect">Connect to Board</button>
-    <div id="status" style="color: green; font-weight: bold; margin-top: 10px;"></div>
-    <pre id="log"></pre>
-
-    <script>
-      const log = document.getElementById("log");
-      const status = document.getElementById("status");
-
-      document.getElementById("connect").onclick = async () => {
-        try {
-          // select a serial device
-          const port = await navigator.serial.requestPort();
-          await port.open({ baudRate: 115200 });
-
-          // Show success message
-          status.textContent = "Connected successfully!";
-
-          const decoder = new TextDecoder();
-          const reader = port.readable.getReader();
-          let buffer = "";
-
-          while (true) {
-            const { value, done } = await reader.read();
-            if (done) break;
-            buffer += decoder.decode(value);
-            let lines = buffer.split("\n");
-            buffer = lines.pop();
-            for (const line of lines) {
-              log.textContent += line.trim() + "\n";
-            }
-          }
-        } catch (err) {
-          console.error("Error:", err);
-          status.textContent = "Connection failed!";
-          status.style.color = "red";
-        }
-      };
-    </script>
+    <h1 class="head">Sensor Status Search</h1>
+    <form class="head" action="/" method="get">
+      <input
+        type="text"
+        name="query"
+        placeholder="Type Sensor Name..."
+        required
+      />
+      <button type="submit">Search</button>
+    </form>
+    {% if results is not none and not results.empty %}
+    <h2>Results for "{{ query }}"</h2>
+    <table border="1">
+      <tr>
+        {% for col in results.columns %}
+        <th>{{ col }}</th>
+        {% endfor %}
+      </tr>
+      {% for _, row in results.iterrows() %}
+      <tr>
+        {% for col in results.columns %}
+        <td>{{ row[col] }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </table>
+    {% elif query %}
+    <p>No results found for "{{ query }}"</p>
+    {% endif %}
   </body>
 </html>
