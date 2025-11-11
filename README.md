@@ -59,6 +59,8 @@ Create an end-to-end workflow that automatically logs sensor health data and dis
 * **Backend Layer:** Flask reads Excel files, filters results, and renders them to a searchable web page.
 * **Frontend Layer:** `index.html` (Jinja2 template) provides a clean search interface and a live data table.
 
+The following figure shows the whole system architecture with details.
+
 <img width="1117" height="884" alt="image" src="https://github.com/user-attachments/assets/29edc99e-5a0c-4f10-82ff-238de1824da3" />
 
 ---
@@ -74,10 +76,16 @@ Create an end-to-end workflow that automatically logs sensor health data and dis
 
 ### (2) Requirement Breakdown → Data Flow
 
-1. Serial data stream (from ESP32) is captured and parsed into structured rows.
+1. Serial data stream (from mega2560) is captured and parsed into structured rows.
 2. Status updates are written only when changes occur (avoiding redundant logs).
 3. Excel file serves as both data store and validation record.
 4. Flask web app reads the Excel file dynamically, allowing users to search sensors by name or ID.
+
+The following figure shows the time-sequence of data-flows.
+
+<img width="1620" height="930" alt="image" src="https://github.com/user-attachments/assets/88962e71-a390-4736-8229-cf9fbb9b82b5" />
+
+
 
 ### (3) Technology Decisions
 
