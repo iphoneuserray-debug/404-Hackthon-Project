@@ -54,10 +54,12 @@ Create an end-to-end workflow that automatically logs sensor health data and dis
                         └─────────────────────────────┘
 ```
 
-* **Hardware Layer:** ESP32 with VL53L0X / VL53L1X / VL6180X ToF sensors prints diagnostic info via serial.
+* **Hardware Layer:** Mega2560 with VL53L0X / VL53L1X / VL6180X ToF sensors prints diagnostic info via serial.
 * **Data Collection Layer:** `serial_to_excel.py` reads serial output, parses it into structured fields, and updates an Excel file.
 * **Backend Layer:** Flask reads Excel files, filters results, and renders them to a searchable web page.
 * **Frontend Layer:** `index.html` (Jinja2 template) provides a clean search interface and a live data table.
+
+<img width="1117" height="884" alt="image" src="https://github.com/user-attachments/assets/29edc99e-5a0c-4f10-82ff-238de1824da3" />
 
 ---
 
@@ -81,7 +83,7 @@ Create an end-to-end workflow that automatically logs sensor health data and dis
 
 | Layer        | Tool                                  | Reason                                     |
 | ------------ | ------------------------------------- | ------------------------------------------ |
-| Hardware     | ESP32 + VL53 series                   | Widely used, easy serial output            |
+| Hardware     | Mega2560 + VL53 series                   | Widely used, easy serial output            |
 | Data Logging | Python + pySerial + pandas + openpyxl | Fast prototyping, Excel compatibility      |
 | Backend      | Flask                                 | Lightweight, integrates easily with pandas |
 | Frontend     | HTML + CSS + Jinja                    | Minimal setup, readable for beginners      |
@@ -112,7 +114,7 @@ Create an end-to-end workflow that automatically logs sensor health data and dis
 
 ### 1. Hardware
 
-Connect ESP32 and sensors via I²C, upload the Arduino test sketch that prints:
+Connect Mega2560 and sensors via I²C, upload the Arduino test sketch that prints:
 
 ```
 ID,Sensor,Working,Status,Notes
@@ -160,23 +162,4 @@ Team focus: bridging **Mechatronics hardware diagnostics** with **Full-Stack Web
 Mentor support: Senior software engineer (20+ years experience).
 
 ---
-
-
-flowchart LR
-  Student(("Student / Engineer"))
-
-  Mega["Mega2560 + Sensors\n(VL53L0X / VL53L1X / VL6180X)"]
-  Script["serial_to_excel.py\n(Python, pySerial + pandas)"]
-  Excel[("sensor_status.xlsx\nStatus & Changes")]
-  Flask["Flask Backend\n(app.py)"]
-  Browser["Web UI\n(index.html, Jinja template)"]
-
-  Student -->|uses web UI| Browser
-  Browser -->|HTTP GET / ?query=...| Flask
-  Flask -->|read / filter| Excel
-
-  Mega -->|Serial CSV lines| Script
-  Script -->|update status & history| Excel
-
-  Flask -->|render template| Browser
 
