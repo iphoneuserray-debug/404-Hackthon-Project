@@ -29,7 +29,8 @@ Create an end-to-end workflow that automatically logs sensor health data and dis
 ## 2. Solution Architecture
 
 ### Software State-transition Structure Figure
-<img width="996" height="1021" alt="image" src="https://github.com/user-attachments/assets/ab1d24ad-4ac7-487e-b8e6-b199df302681" />
+<img width="784" height="1043" alt="image" src="https://github.com/user-attachments/assets/22ea07a1-7733-4b20-b9b5-9a129662eed8" />
+
 
 
 
