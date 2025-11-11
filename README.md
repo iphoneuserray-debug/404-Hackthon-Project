@@ -28,6 +28,15 @@ Create an end-to-end workflow that automatically logs sensor health data and dis
 
 ## 2. Solution Architecture
 
+### Software State-transition Structure Figure
+<img width="996" height="1021" alt="image" src="https://github.com/user-attachments/assets/ab1d24ad-4ac7-487e-b8e6-b199df302681" />
+
+
+
+
+
+### Software and hardware's combined deployment
+
 ```
 ┌──────────┐   Serial Data (CSV)    ┌──────────────────────┐
 │ mega  &  │  → via USB COM Port →  │ serial_to_excel.py   │
