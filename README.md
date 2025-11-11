@@ -178,5 +178,6 @@ Developed for **CISSA Catalyst 2025 Hackathon** at the University of Melbourne.
 Team focus: bridging **Mechatronics hardware diagnostics** with **Full-Stack Web Development**.
 Mentor support: Senior software engineer from Accenture(20+ years experience).
 Editor: Xinyu Xu
+
 ---
 
