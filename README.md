@@ -7,7 +7,7 @@ Here’s an illustration matching the **latest architecture** (backend serial re
 
 ### Overview
 
-This project provides an **automated sensor diagnostics and visualization system** that integrates hardware (ESP32 + ToF sensors), a Python backend for serial data processing, and a Flask-based web interface for real-time inspection of sensor status.
+This project provides an **automated sensor diagnostics and visualization system** that integrates hardware (mega2560 + ToF sensors), a Python backend for serial data processing, and a Flask-based web interface for real-time inspection of sensor status.
 It replaces the traditional manual workflow — where engineers test each board by hand and record data line-by-line — with a semi-automated, structured, and traceable process.
 
 ---
@@ -30,7 +30,7 @@ Create an end-to-end workflow that automatically logs sensor health data and dis
 
 ```
 ┌──────────┐   Serial Data (CSV)    ┌──────────────────────┐
-│ ESP32 &  │  → via USB COM Port →  │ serial_to_excel.py   │
+│ mega  &  │  → via USB COM Port →  │ serial_to_excel.py   │
 │  Sensors │                        │ (Python Script)      │
 └──────────┘                        └──────────┬───────────┘
                                                │
@@ -160,3 +160,23 @@ Team focus: bridging **Mechatronics hardware diagnostics** with **Full-Stack Web
 Mentor support: Senior software engineer (20+ years experience).
 
 ---
+
+
+flowchart LR
+  Student(("Student / Engineer"))
+
+  Mega["Mega2560 + Sensors\n(VL53L0X / VL53L1X / VL6180X)"]
+  Script["serial_to_excel.py\n(Python, pySerial + pandas)"]
+  Excel[("sensor_status.xlsx\nStatus & Changes")]
+  Flask["Flask Backend\n(app.py)"]
+  Browser["Web UI\n(index.html, Jinja template)"]
+
+  Student -->|uses web UI| Browser
+  Browser -->|HTTP GET / ?query=...| Flask
+  Flask -->|read / filter| Excel
+
+  Mega -->|Serial CSV lines| Script
+  Script -->|update status & history| Excel
+
+  Flask -->|render template| Browser
+
